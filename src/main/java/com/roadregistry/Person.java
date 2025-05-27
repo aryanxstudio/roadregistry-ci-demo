@@ -96,9 +96,7 @@ public class Person {
         return true;
     }
 
-    /**
-     * Validates the address format (must be in Victoria).
-     */
+
     private boolean isValidAddress(String addr) {
         return addr.matches("^\\d+\\|[^|]+\\|[^|]+\\|Victoria\\|[^|]+$");
     }
