@@ -34,9 +34,19 @@ public class Person {
      * @return true if added successfully, false otherwise.
      */
     public boolean addPerson() {
-        if (!isValidID(personID) || !isValidAddress(address) || !isValidDate(birthdate)) {
+        if (!isValidID(personID)) {
+            System.out.println("Invalid input: Person ID is invalid.");
             return false;
         }
+        if (!isValidAddress(address)) {
+             System.out.println("Invalid input: Address is invalid.");
+             return false;
+        }
+        if (!isValidDate(birthdate)) {
+            System.out.println("Invalid input: Birthdate format should be DD-MM-YYYY.");
+            return false;
+        }
+
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("persons.txt", true))) {
             bw.write(toString());
             bw.newLine();
@@ -54,11 +64,23 @@ public class Person {
         boolean birthdayChanged = !this.birthdate.equals(newBirth);
         boolean idStartsEven = Character.getNumericValue(this.personID.charAt(0)) % 2 == 0;
 
-        if (age < 18 && !this.address.equals(newAddress)) return false;
-        if (birthdayChanged && (!newFirst.equals(firstName) || !newLast.equals(lastName) || !newAddress.equals(address))) return false;
-        if (idStartsEven && !newID.equals(personID)) return false;
+        if (age < 18 && !this.address.equals(newAddress)){
+            System.out.println("Invalid update: Person is under 18 and cannot change address.");
+            return false;
+        } 
+        if (birthdayChanged && (!newFirst.equals(firstName) || !newLast.equals(lastName) || !newAddress.equals(address))){
+            System.out.println("Invalid update: When birthday is changed, no other field can be changed.");
+            return false;
+        }
+        if (idStartsEven && !newID.equals(personID)){
+            System.out.println("Invalid update: ID starts with an even number and cannot be changed.");
+            return false;
+        } 
 
-        if (!isValidID(newID) || !isValidAddress(newAddress) || !isValidDate(newBirth)) return false;
+        if (!isValidID(newID) || !isValidAddress(newAddress) || !isValidDate(newBirth)){
+            System.out.println("Invalid update: New person ID is invalid.");
+            return false;
+        }
 
         this.personID = newID;
         this.firstName = newFirst;
