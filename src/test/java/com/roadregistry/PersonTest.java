@@ -5,9 +5,20 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 public class PersonTest {
     //add person tests first
+    @BeforeAll
+    static void fileClear(){
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("persons.txt"))){
+            writer.write("");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     void testAddPerson_Valid1(){
         Person p = new Person("56s_d%&fAB", "Peter", "Parker", "32|Highland Street|Melbourne|Victoria|Australia", "15-11-1990");
@@ -112,14 +123,6 @@ public class PersonTest {
         assertEquals("Failed", result);
         System.out.println("testAddDemeritPoints_Invalid2: Test successful so false");
     }
-    @BeforeEach
-    void fileClear(){
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("persons.txt"))){
-            writer.write("");
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    
 
 }
