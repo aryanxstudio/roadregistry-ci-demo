@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.*;
 
+
 /**
  * Represents a person in the RoadRegistry system.
  * Manages addition, update, and demerit logic for licensing.
@@ -19,6 +20,7 @@ public class Person {
     private boolean isSuspended;
     private List<Demerit> demerits;
 
+    
     public Person(String personID, String firstName, String lastName, String address, String birthdate) {
         this.personID = personID;
         this.firstName = firstName;
@@ -29,6 +31,7 @@ public class Person {
         this.demerits = new ArrayList<>();
     }
 
+    
     /**
      * Adds the person to a file if all conditions are satisfied.
      * @return true if added successfully, false otherwise.
@@ -38,10 +41,12 @@ public class Person {
             System.out.println("Invalid input: Person ID is invalid.");
             return false;
         }
+        
         if (!isValidAddress(address)) {
              System.out.println("Invalid input: Address is invalid.");
              return false;
         }
+        
         if (!isValidDate(birthdate)) {
             System.out.println("Invalid input: Birthdate format should be DD-MM-YYYY.");
             return false;
@@ -56,6 +61,7 @@ public class Person {
         }
     }
 
+    
     /**
      * Updates a person's personal details in the file if all conditions are satisfied.
      */
@@ -68,10 +74,12 @@ public class Person {
             System.out.println("Invalid update: Person is under 18 and cannot change address.");
             return false;
         } 
+        
         if (birthdayChanged && (!newFirst.equals(firstName) || !newLast.equals(lastName) || !newAddress.equals(address))){
             System.out.println("Invalid update: When birthday is changed, no other field can be changed.");
             return false;
         }
+        
         if (idStartsEven && !newID.equals(personID)){
             System.out.println("Invalid update: ID starts with an even number and cannot be changed.");
             return false;
@@ -105,6 +113,7 @@ public class Person {
         if ((age < 21 && totalPoints > 6) || (age >= 21 && totalPoints > 12)) {
             isSuspended = true;
         }
+        
         return rewriteFile() ? "Success" : "Failed";
     }
   
